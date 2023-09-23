@@ -21,11 +21,29 @@ function getBlackCount(guess, secret) {
     return egyezésekSzáma;
 }
 
+function assocArray(array) {
+    const object = {};
+    for (let item of array) {
+        if (object[item] > 0) {
+            object[item]++;
+        } else {
+            object[item] = 1;
+        }
+    }
+    return object;
+}
+
 function getWhiteCount(guess, secret, blackCount) {
     let egyezésekSzáma = 0;
-    for (let i = 0; i < guess.length; i++) {
-        if (guess.sort()[i] === secret.sort()[i]) {
-            egyezésekSzáma++;
+    let guess2 = assocArray(guess);
+    let secret2 = assocArray(secret);
+    for (key in secret2) {
+        if (guess2[key] === undefined) {
+            continue;
+        } else if (secret2[key] <= guess2[key]) {
+            egyezésekSzáma = egyezésekSzáma + secret2[key];
+        } else {
+            egyezésekSzáma = egyezésekSzáma + guess2[key];
         }
     }
     return egyezésekSzáma - blackCount;
@@ -41,9 +59,9 @@ function gameLoop() {   // levezényli a játékot
     let guess = readGuess();    // bekér a felhasználótól egy tippet
     console.log(guess);
     let blackCount = getBlackCount(guess, secret);   // fekete pöttyök száma
-    console.log(blackCount);
+    console.log("A fekete pöttyök száma: ", blackCount);
     let whiteCount = getWhiteCount(guess, secret, blackCount);   // fehér pöttyök száma
-    console.log(whiteCount);
+    console.log("A fehér pöttyök száma: ", whiteCount);
 
     if (isGameWon(blackCount)) {
         console.log("Nyertél!");    // nyertünk?

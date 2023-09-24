@@ -3,10 +3,11 @@ function generateSecret() {
 }
 
 function readGuess() {
-    let guess =
-        prompt("Találd ki a titkos kódot, ami négy számjegyből áll!")
-            .split("");
-    return guess;
+    let guess;
+    do {
+        guess = prompt("Találd ki a titkos kódot, ami négy számjegyből áll!");
+    } while (isNaN(Number(guess)) === true || guess.length !== 4);
+    return guess.split("");
 }
 
 function getBlackCount(guess, secret) {

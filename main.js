@@ -72,4 +72,14 @@ function gameLoop() {   // levezényli a játékot
         }
         playerMoves--;
     } while (isGameWon(blackCount) !== true && playerMoves > 0);
+    if (isGameWon(blackCount) === false) console.log("Vesztettél! :-)");
+
+}
+
+function mainGame() {
+    let answer = "i";
+    do {
+        gameLoop();
+        answer = prompt("Akarsz még egyet játszani? i/n");
+    } while (answer === 'i');
 }

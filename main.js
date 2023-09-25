@@ -56,15 +56,20 @@ function isGameWon(blackCount) {
 
 function gameLoop() {   // levezényli a játékot
     const secret = generateSecret();    // legenerál egy négyszámjegyű sorozatot
-    console.log(secret);
-    let guess = readGuess();    // bekér a felhasználótól egy tippet
-    console.log(guess);
-    let blackCount = getBlackCount(guess, secret);   // fekete pöttyök száma
-    console.log("A fekete pöttyök száma: ", blackCount);
-    let whiteCount = getWhiteCount(guess, secret, blackCount);   // fehér pöttyök száma
-    console.log("A fehér pöttyök száma: ", whiteCount);
+    console.log(secret); // fejlesztési segédlet
+    let playerMoves = 10;
+    do {
+        console.log("Próbálkozások száma: ", playerMoves);
+        let guess = readGuess();    // bekér a felhasználótól egy tippet
+        console.log(guess);
+        var blackCount = getBlackCount(guess, secret);   // fekete pöttyök száma
+        console.log("A fekete pöttyök száma: ", blackCount);
+        let whiteCount = getWhiteCount(guess, secret, blackCount);   // fehér pöttyök száma
+        console.log("A fehér pöttyök száma: ", whiteCount);
 
-    if (isGameWon(blackCount)) {
-        console.log("Nyertél!");    // nyertünk?
-    }
+        if (isGameWon(blackCount)) {
+            console.log("Nyertél!");    // nyertünk?
+        }
+        playerMoves--;
+    } while (isGameWon(blackCount) !== true && playerMoves > 0);
 }
